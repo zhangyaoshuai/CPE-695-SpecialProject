@@ -1,0 +1,10 @@
+yes: 113359872
+apartments: 18646702
+commercial: 8686701
+school: 5848005
+theatre: 3019145
+office: 2859667
+church: 2718335
+warehouse: 1381568
+retail: 1051902
+college: 954218
