@@ -1,0 +1,94 @@
+body .image-container {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-repeat:no-repeat;
+    background-size:100%;
+    background: white;
+}
+
+.thumbnail > image {
+    max-height: 150px;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+ul.errorlist {
+    padding-left: 0;
+}
+
+ul.errorlist > li {
+    list-style: none;
+}
+
+.navbar {
+    border-radius: 0;
+}
+
+.navbar-brand {
+    font-family: 'Satisfy', cursive;
+}
+
+.glyphicon-star {
+    color: #CCCCCC;
+    font-size: 16px;
+}
+
+.glyphicon-star.active {
+    color: #FDB230;
+}
+#user-container {
+    width:40%;
+    height:100%;
+    max-height:600px;
+    min-width: 100px;
+    overflow-y:scroll;
+    position:relative;
+	}
+
+#map {
+    width:100%;
+    height:100%;
+    max-height: 600px;
+    min-width: 120px;
+    min-height: 100px;
+    border-radius: 6px;
+    position: absolute;
+}
+#map_container {
+    height:100%;
+    width:60%;
+    position:relative;
+}
+
+/*
+ * These CSS rules affect the tooltips within maps with the custom-popup
+ * class. See the full CSS for all customizable options:
+ * https://github.com/mapbox/mapbox.js/blob/001754177f3985c0e6b4a26e3c869b0c66162c99/theme/style.css#L321-L366
+*/
+.custom-popup .leaflet-popup-content-wrapper {
+  font-size:20px;
+  line-height:24px;
+  }
+
+.custom-popup .leaflet-popup-tip-container {
+  width:30px;
+  height:15px;
+  }
+.custom-popup .leaflet-popup-tip {
+  border-left:15px solid transparent;
+  border-right:15px solid transparent;
+  border-top:15px solid #2c3e50;
+}
+
+
+html {
+    height: 100%;
+}
+body {
+    height: 100%;
+}
+
+

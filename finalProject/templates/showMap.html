@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}showMap{% endblock %}
+
+{% block content %}
+     <div class="result-container container-fluid" style="height: 100%">
+        <div class="row" style="height: 100%">
+            <div class="col-sm-4 col-md-4" id="result-container"></div>
+            <div class="col-sm-8 col-md-8" id="map_container">
+                <div class='custom-popup' id="map"></div>
+            </div>
+     </div>
+     </div>
+    <div class="footer">
+            <p>© CPE-695 Special Project 2016</p>
+</div>
+     <script type="text/javascript">
+        (function () {
+            var geoData = {{ geoData|safe }};//json data from Flask
+            /*
+            var lat = [];
+            var lng = [];
+            for (var i = 0; i < geoData.tweets.length; i++) {
+                if(geoData.tweets[i].coordinates != "") {
+                    lat.push(geoData.tweets[i].coordinates[0]);
+                    lng.push(geoData.tweets[i].coordinates[1]);
+                }
+            }
+
+            var latMiddle = (Math.max.apply(null, lat) + Math.min.apply(null, lat)) / 2;
+            var lngMiddle = (Math.max.apply(null, lng) + Math.min.apply(null, lng)) / 2;
+            */
+            var mytiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            });
+            // Initialise an empty map
+            var map = L.map('map')
+
+            map.addLayer(mytiles).setView([37.697948,-97.314835], 4);
+            for (var i = 0; i < geoData.tweets.length; i++) {
+                if(geoData.tweets[i].coordinates != "") {
+                    L.marker([geoData.tweets[i].coordinates[1], geoData.tweets[i].coordinates[0]])
+                            .bindPopup("<div class='panel panel-default'><div class='panel-heading'>"+ geoData.screen_name +"</div><div class='panel-body'><div class='caption'><h4>" + geoData.tweets[i].text + "</h4></div><span class=text-success>" + geoData.tweets[i].created_at +"</span></div>")
+                            .addTo(map)
+                            .on('mouseover', function (e) {
+                                this.openPopup();
+                            })
+                            .on('mouseout', function (e) {
+                                this.closePopup();
+                            })
+                            .on('click', function (e) {
+                                this.off('mouseout');
+                                this.openPopup();
+                            })
+                }
+            }
+            $('input:text').focus(
+                    function () {
+                        $(this).val('');
+                    }
+            );
+        })(jQuery);
+     </script>
+{% endblock %}
