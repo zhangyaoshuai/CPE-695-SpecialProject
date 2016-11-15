@@ -1,4 +1,6 @@
-from flask import Flask, render_template, request, redirect, jsonify
+from flask import Flask, render_template, request, Response, json, redirect, jsonify, send_from_directory
+import flask as fk
+from pprint import pprint
 #MongoDB driver
 from pymongo import MongoClient
 from bson import ObjectId
@@ -13,7 +15,6 @@ from twitter_client import get_twitter_client
 def Most_Common(lst):
     data = Counter(lst)
     return data.most_common(1)[0][0]
-
 
 #get all users that matches posted screen name
 def get_twitter_user(screen_name):
@@ -61,7 +62,11 @@ def get_all_tweets(user_id):
 
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
+
+@app.route('/public/<path:path>')
+def send_js(path):
+    return send_from_directory('static', path)
 
 #MongoDB coonection
 MONGODB_HOST = 'localhost'
@@ -83,6 +88,23 @@ def index():
 
     return render_template('index.html', users=users)
 
+#index.html...show collection of all users.
+@app.route('/users', methods=["GET"])
+def users():
+    try:
+        client = MongoClient(MONGODB_HOST, MONGODB_PORT)
+        db = client[DB_NAME]
+        collection = db['user_timelines']
+    except Exception as e:
+        return Response({"error":"errorrrr"}, status=404, mimetype='application/json')
+    users = collection.find()[:2] # return 2 user to reduce time
+    #users= list(users)
+    #print(type(users),"######")
+    json_users = [json.dumps(user, default=json_util.default) for user in users]
+
+    client.close()
+    print("dongyy56e")
+    return Response(json.dumps(json_users), status=200, mimetype='application/json')
 
 #show the map...
 @app.route('/showMap/<uid>', methods=["GET"])
