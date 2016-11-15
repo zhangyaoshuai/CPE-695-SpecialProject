@@ -21,6 +21,7 @@ def get_all_tweets(user_id):
     '''
     jsonResults = {
         "screen_name": client.get_user(user_id=user_id).screen_name,
+        "total_tweets": len(alltweets),
         "followers_count": client.get_user(user_id=user_id).followers_count,
         "friends_count": client.get_user(user_id=user_id).friends_count,
         "total_favorite_count": client.get_user(user_id=user_id).favourites_count,
@@ -38,7 +39,7 @@ def get_all_tweets(user_id):
         }
         jsonResults["tweets"].append(tweet)
 
-    with open('jsonFiles/user_timelines/%s_tweets.json' % user_id, 'w') as f:
+    with open('/Users/Eric/Documents/EE695/specialProject/jsonFiles/user_timelines/%s_tweets.json' % user_id, 'w') as f:
         f.write(json.dumps(jsonResults, indent=4))
     f.close()
 

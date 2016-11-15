@@ -14,5 +14,5 @@ if __name__ == "__main__":
 	with open('users.txt') as u:
 		users = u.readlines()
 		for user in users:
-			with open('jsonFiles/user_buildings/%s_tweets_building.json' % int(user), 'r') as jsonFile:
+			with open('/Users/Eric/Documents/EE695/specialProject/jsonFiles/user_buildings/%s_tweets_building.json' % int(user), 'r') as jsonFile:
 				store(jsonFile)

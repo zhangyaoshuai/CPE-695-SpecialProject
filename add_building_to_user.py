@@ -8,6 +8,7 @@ def addBuildings(user_id):
             result = {
                 "type": "FeatureCollection", 
                 "screen_name": content["screen_name"],
+                "total_tweets": 0,
                 "total_favorite_count": content["total_favorite_count"],
                 "followers_count": content["followers_count"],
                 "friends_count": content["friends_count"],
@@ -41,18 +42,16 @@ def addBuildings(user_id):
                             if match.match(lat, long, coordinate):
                                 features["buildings"].append(tw["properties"])
                         result["features"].append(features)
+                        result["total_tweets"] = len(result["features"])
         jsonout.write(json.dumps(result, indent=4))
     jsonout.close()
 
 if __name__ == "__main__":
-    '''
     with open('users.txt') as u:
         users = u.readlines()
         for user in users:
             addBuildings(int(user))
-    '''
-    user = 10164502
-    addBuildings(user)
+    
 
 
 
