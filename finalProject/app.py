@@ -21,7 +21,6 @@ def get_twitter_user(screen_name):
     twitter_users = client.get_user(screen_name=screen_name)
     return twitter_users
 
-
 #get a user's up to 1000 twits
 def get_all_tweets(user_id):
     client = get_twitter_client()
