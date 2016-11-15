@@ -37,10 +37,10 @@
             var map = L.map('map')
 
             map.addLayer(mytiles).setView([37.697948,-97.314835], 4);
-            for (var i = 0; i < geoData.tweets.length; i++) {
-                if(geoData.tweets[i].coordinates != "") {
-                    L.marker([geoData.tweets[i].coordinates[1], geoData.tweets[i].coordinates[0]])
-                            .bindPopup("<div class='panel panel-default'><div class='panel-heading'>"+ geoData.screen_name +"</div><div class='panel-body'><div class='caption'><h4>" + geoData.tweets[i].text + "</h4></div><span class=text-success>" + geoData.tweets[i].created_at +"</span></div>")
+            for (var i = 0; i < geoData.features.length; i++) {
+                if(geoData.features[i].geometry.coordinates != "") {
+                    L.marker([geoData.features[i].geometry.coordinates[1], geoData.features[i].geometry.coordinates[0]])
+                            .bindPopup("<div class='panel panel-default'><div class='panel-heading'>"+ geoData.screen_name +"</div><div class='panel-body'><div class='caption'><h4>" + geoData.features[i].properties.text + "</h4></div><span class=text-success>" + geoData.features[i].properties.created_at +"</span></div>")
                             .addTo(map)
                             .on('mouseover', function (e) {
                                 this.openPopup();
