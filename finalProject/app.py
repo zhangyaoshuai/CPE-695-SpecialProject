@@ -1,15 +1,18 @@
-from flask import Flask, render_template, request, Response, json, redirect, jsonify, send_from_directory
-import flask as fk
-from pprint import pprint
+from flask import Flask, render_template, request, Response, json, send_from_directory
 #MongoDB driver
 from pymongo import MongoClient
 from bson import ObjectId
 import json
-from bson import json_util
-from bson.json_util import dumps
 from collections import Counter
 #twitter API
 from twitter_client import get_twitter_client
+
+
+class JSONEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, ObjectId):
+            return str(o)
+        return json.JSONEncoder.default(self, o)
 
 #get the most frequent terms in an array
 def Most_Common(lst):
@@ -19,47 +22,8 @@ def Most_Common(lst):
 #get all users that matches posted screen name
 def get_twitter_user(screen_name):
     client = get_twitter_client()
-    twitter_users = client.get_user(screen_name=screen_name)
-    return twitter_users
-
-#get a user's up to 1000 twits
-def get_all_tweets(user_id):
-    client = get_twitter_client()
-    alltweets = []
-    new_tweets = client.user_timeline(user_id=user_id, count=200)
-    alltweets.extend(new_tweets)
-    oldest = alltweets[-1].id - 1
-    for i in range(0,5):
-        new_tweets = client.user_timeline(user_id=user_id, count=200, max_id=oldest)
-        alltweets.extend(new_tweets)
-        oldest = alltweets[-1].id - 1
-
-    jsonResults = {
-        "user_profile_url": client.get_user(user_id=user_id).user.profile_image_url,
-        "screen_name": client.get_user(suser_id=user_id).screen_name,
-        "total_tweets": 0,
-        "followers_count": client.get_user(user_id=user_id).followers_count,
-        "friends_count": client.get_user(user_id=user_id).friends_count,
-        "total_favorite_count": client.get_user(user_id=user_id).favourites_count,
-        "tweets": []
-    }
-
-    for tweet in alltweets:
-        if tweet.coordiantes:
-            tweet = {
-                "id": tweet.id_str,
-                "coordinates": tweet.coordinates,
-                "text": tweet.text.encode("utf-8"),
-                "retweet_count": tweet.retweet_count,
-                "created_at": tweet.created_at.isoformat(),
-                "favorite_count": tweet.favorite_count,
-            }
-            jsonResults["tweets"].append(tweet)
-            jsonResults["total_tweets"] = len(jsonResults["tweets"])
-
-    return jsonResults
-
-
+    twitter_user = client.get_user(screen_name=screen_name)
+    return twitter_user
 
 
 app = Flask(__name__, static_url_path='')
@@ -83,28 +47,37 @@ def index():
     except Exception as e:
         return render_template('index.html', error=str(e))
     users = collection.find()
-    #user_timelines = json.dumps(users, default=json_util.default)
+        #user_timelines = json.dumps(users, default=json_util.default)
     client.close()
-
     return render_template('index.html', users=users)
 
+
+#search a specific user by screen name
+@app.route('/getUser', methods=["POST"])
+def getUser():
+    screen_name = request.form.get("screen_name")
+    try:
+        twitter_user = get_twitter_user(screen_name)
+    except Exception as e:
+        return render_template('index.html', error=str(e))
+
+    return render_template('index.html', twitter_user=twitter_user)
+
+
 #index.html...show collection of all users.
-@app.route('/users', methods=["GET"])
-def users():
+@app.route('/showUsers', methods=["GET"])
+def showUsers():
     try:
         client = MongoClient(MONGODB_HOST, MONGODB_PORT)
         db = client[DB_NAME]
         collection = db['user_timelines']
     except Exception as e:
         return Response({"error":"errorrrr"}, status=404, mimetype='application/json')
-    users = collection.find()[:2] # return 2 user to reduce time
-    #users= list(users)
-    #print(type(users),"######")
-    json_users = [json.dumps(user, default=json_util.default) for user in users]
-
+    users = collection.find()
+    users= list(users)
+    users_json=JSONEncoder().encode(users)
     client.close()
-    print("dongyy56e")
-    return Response(json.dumps(json_users), status=200, mimetype='application/json')
+    return Response(users_json, status=200, mimetype='application/json')
 
 #show the map...
 @app.route('/showMap/<uid>', methods=["GET"])
@@ -119,18 +92,6 @@ def showMap(uid):
     geoData['_id'] = str(geoData['_id'])
     client.close()
     return render_template('showMap.html', geoData=geoData, uid=uid)
-
-
-#search a specific user by screen name
-@app.route('/<screen_name>', methods=["POST"])
-def get_user(screen_name):
-    try:
-        twitter_users = get_twitter_user(screen_name)
-    except Exception as e:
-        return render_template('idnex.html', error=str(e))
-
-
-    return render_template('index.html', twitter_users=twitter_users)
 
 
 

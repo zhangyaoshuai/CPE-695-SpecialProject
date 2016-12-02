@@ -8,23 +8,15 @@
     <link rel="icon" href="http://getbootstrap.com/favicon.ico">
     <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="http://getbootstrap.com/examples/justified-nav/justified-nav.css" rel="stylesheet">
     <link href="{{ url_for('static', filename='font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
     <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet" type="text/css">
     <script src="{{ url_for('static', filename='js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
-{#    <script src="{{ url_for('static', filename='js/main.js') }}"></script>#}
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 </head>
-<body>
-{% include 'header.html' %}
 {% block content %}
 {% endblock %}
-{% include 'footer.html' %}
-<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-{#<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.1.1.min.js') }}"></script>#}
-<script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
-</body>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
 </html>

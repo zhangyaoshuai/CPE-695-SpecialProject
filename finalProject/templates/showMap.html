@@ -3,9 +3,51 @@
 {% block title %}showMap{% endblock %}
 
 {% block content %}
+    <body>
+    <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+
+        <!-- Header -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Predictor</a>
+        </div>
+
+        <!-- Items -->
+        <div class="collapse navbar-collapse" id="topNavBar">
+            <ul class="nav navbar-nav">
+
+                </li>
+            </ul>
+            <form class="navbar-form navbar-left" role="search" method="GET" action="/getLocation">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="screen_name">
+                </div>
+                <button type="submit" class="btn btn-default">Search</button>
+            </form>
+
+            <ul class="nav navbar-nav navbar-right">
+
+            </ul>
+        </div>
+
+    </div>
+</nav>
+
      <div class="result-container container-fluid" style="height: 100%">
         <div class="row" style="height: 100%">
-            <div class="col-sm-4 col-md-4" id="result-container"></div>
+            <div class="col-sm-4 col-md-4" id="result-container">
+                <div class="row">
+                    <h2 style="text-align: center">{{ geoData.screen_name }}</h2>
+                </div>
+                <div>
+                <canvas></canvas>
+                </div>
+            </div>
             <div class="col-sm-8 col-md-8" id="map_container">
                 <div class='custom-popup' id="map"></div>
             </div>
@@ -14,22 +56,11 @@
     <div class="footer">
             <p>© CPE-695 Special Project 2016</p>
 </div>
+    </body>
      <script type="text/javascript">
         (function () {
             var geoData = {{ geoData|safe }};//json data from Flask
-            /*
-            var lat = [];
-            var lng = [];
-            for (var i = 0; i < geoData.tweets.length; i++) {
-                if(geoData.tweets[i].coordinates != "") {
-                    lat.push(geoData.tweets[i].coordinates[0]);
-                    lng.push(geoData.tweets[i].coordinates[1]);
-                }
-            }
-
-            var latMiddle = (Math.max.apply(null, lat) + Math.min.apply(null, lat)) / 2;
-            var lngMiddle = (Math.max.apply(null, lng) + Math.min.apply(null, lng)) / 2;
-            */
+            console.log(geoData);
             var mytiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             });
