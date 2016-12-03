@@ -20,11 +20,12 @@ def Most_Common(lst):
     return data.most_common(1)[0][0]
 
 #get all users that matches posted screen name
+'''
 def get_twitter_user(screen_name):
     client = get_twitter_client()
     twitter_user = client.get_user(screen_name=screen_name)
     return twitter_user
-
+'''
 
 app = Flask(__name__, static_url_path='')
 
@@ -53,6 +54,7 @@ def index():
 
 
 #search a specific user by screen name
+'''
 @app.route('/getUser', methods=["POST"])
 def getUser():
     screen_name = request.form.get("screen_name")
@@ -62,22 +64,29 @@ def getUser():
         return render_template('index.html', error=str(e))
 
     return render_template('index.html', twitter_user=twitter_user)
-
+'''
 
 #index.html...show collection of all users.
-@app.route('/showUsers', methods=["GET"])
-def showUsers():
+@app.route('/getBuildings', methods=["GET"])
+def getBuildings():
     try:
         client = MongoClient(MONGODB_HOST, MONGODB_PORT)
         db = client[DB_NAME]
-        collection = db['user_timelines']
+        collection = db['buildings']
     except Exception as e:
         return Response({"error":"errorrrr"}, status=404, mimetype='application/json')
-    users = collection.find()
-    users= list(users)
-    users_json=JSONEncoder().encode(users)
+    buildings = collection.find()
+    buildings = list(buildings)
+    result = {}
+    for building in buildings:
+        for elem in building["buildings"]:
+            if elem["type"] not in result:
+                result[elem["type"]] = 1
+            else:
+                result[elem["type"]] += 1
+    result = JSONEncoder().encode(result)
     client.close()
-    return Response(users_json, status=200, mimetype='application/json')
+    return Response(result, status=200, mimetype='application/json')
 
 #show the map...
 @app.route('/showMap/<uid>', methods=["GET"])
