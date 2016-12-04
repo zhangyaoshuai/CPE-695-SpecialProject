@@ -4,8 +4,6 @@ from pymongo import MongoClient
 from bson import ObjectId
 import json
 from collections import Counter
-#twitter API
-from twitter_client import get_twitter_client
 
 
 class JSONEncoder(json.JSONEncoder):
@@ -47,8 +45,8 @@ def index():
         collection = db['user_timelines']
     except Exception as e:
         return render_template('index.html', error=str(e))
-    users = collection.find()
-        #user_timelines = json.dumps(users, default=json_util.default)
+    users = collection.find().sort("total_tweets", -1)
+    users = list(users)[0:20]
     client.close()
     return render_template('index.html', users=users)
 
@@ -66,7 +64,7 @@ def getUser():
     return render_template('index.html', twitter_user=twitter_user)
 '''
 
-#index.html...show collection of all users.
+#show collection of all building types.
 @app.route('/getBuildings', methods=["GET"])
 def getBuildings():
     try:
@@ -84,9 +82,38 @@ def getBuildings():
                 result[elem["type"]] = 1
             else:
                 result[elem["type"]] += 1
-    result = JSONEncoder().encode(result)
+    resultList = sorted(result, key=lambda key: result[key], reverse=True)
+    final = {}
+    for r in resultList[0:10]:
+        final[r] = result[r]
+    final = JSONEncoder().encode(final)
     client.close()
-    return Response(result, status=200, mimetype='application/json')
+    return Response(final, status=200, mimetype='application/json')
+
+@app.route('/leastCommon', methods=["POST"])
+def leastCommon():
+    try:
+        client = MongoClient(MONGODB_HOST, MONGODB_PORT)
+        db = client[DB_NAME]
+        collection = db['buildings']
+    except Exception as e:
+        return Response({"error":"errorrrr"}, status=404, mimetype='application/json')
+    buildings = collection.find()
+    buildings = list(buildings)
+    result = {}
+    for building in buildings:
+        for elem in building["buildings"]:
+            if elem["type"] not in result:
+                result[elem["type"]] = 1
+            else:
+                result[elem["type"]] += 1
+    resultList = sorted(result, key=lambda key: result[key], reverse=False)
+    final = {}
+    for r in resultList[0:10]:
+        final[r] = result[r]
+    final = JSONEncoder().encode(final)
+    client.close()
+    return Response(final, status=200, mimetype='application/json')
 
 #show the map...
 @app.route('/showMap/<uid>', methods=["GET"])
@@ -101,6 +128,19 @@ def showMap(uid):
     geoData['_id'] = str(geoData['_id'])
     client.close()
     return render_template('showMap.html', geoData=geoData, uid=uid)
+
+@app.route('/getMap/', methods=["GET"])
+def getMap():
+    screen_name = request.args.get("screen_name")
+    try:
+        client = MongoClient(MONGODB_HOST, MONGODB_PORT)
+        db = client[DB_NAME]
+        collection = db['user_timelines']
+    except Exception as e:
+        return render_template('error.html',error = str(e))
+    geoData = collection.find_one({'screen_name': screen_name})
+    geoData['_id'] = str(geoData['_id'])
+    client.close()
 
 
 

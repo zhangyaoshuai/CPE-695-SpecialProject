@@ -1,14 +1,14 @@
 /**
- * Created by EricZhang on 12/2/16.
+ * Created by EricZhang on 12/3/16.
  */
 $(document).ready(function () {
     var response;
     $.ajax({
-        url: '/getBuildings',
+        data: {'screen_name': $('#screen_name').text()},
+        url: '/getMap',
         type: 'get',
         success: function(data) {
             response = data;
-            console.log(response);
             var dataset = [];
             for(var key in response) {
                 dataset.push({building: key, number: response[key]});
@@ -16,6 +16,7 @@ $(document).ready(function () {
             generateChart(dataset)
         }
     });
+
     $('#leastCommon').on('click', function () {
         d3.select("svg").remove();
         $.ajax({
@@ -51,8 +52,8 @@ $(document).ready(function () {
     });
 
     var generateChart = function (dataset) {
-        var margin = {top: 10, right: 0, bottom: 20, left: 50},
-            width = 700 - margin.left - margin.right,
+        var margin = {top: 10, right: 10, bottom: 20, left: 10},
+            width = 450 - margin.left - margin.right,
             height = 300 - margin.top - margin.bottom;
         var x = d3.scale.ordinal()
             .rangeRoundBands([0, width], .3, 0.3);

@@ -55,6 +55,7 @@
                     <input type="text" class="form-control" name="screen_name">
                 </div>
                 <button type="submit" class="btn btn-default">Search</button>
+
             </form>
 
             <ul class="nav navbar-nav navbar-right">
@@ -66,7 +67,7 @@
 </nav>
 
     <div class="container-fluid">
-    <div class="col-sm-4 col-md-4" id="user-container" style="width:33%">
+    <div class="col-sm-4 col-md-4" id="user-container" style="width:40%">
     {% if  users %}
         <table class="table table-hover">
         <thead>
@@ -98,7 +99,7 @@
                         <th>Total tweets</th>
                         <th>Friends count</th>
                         <th>Followers count</th>
-                        <th>Total favorite count</th>
+                        <th>favorite count</th>
                     </tr>
                  </thead>
                  <tbody>
@@ -115,10 +116,12 @@
             <h2><span class="text-danger">{{ error }}</span></h2>
     {% endif %}
          </div>
-        <div class="col-sm-8 col-md-8" style="width: 66%">
-        <div class="row">
+        <div class="col-sm-8 col-md-8" style="width: 60%; height: 100%;">
+        <div class="row" style="height: 100%;">
             <div id="svg1" class="col-sm-12 col-md-12">
                 <label><input id="sort" type="checkbox"> Sort values</label>
+                <button type="button" id="leastCommon" class="btn btn-primary">Least10</button>
+                <button type="button" id="mostCommon" class="btn btn-primary">Most10</button>
             </div>
             <div class="col-sm-12 col-md-12">
                 <svg id="svg2">
@@ -130,5 +133,5 @@
         </div>
     </div>
     </body>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 {% endblock %}
