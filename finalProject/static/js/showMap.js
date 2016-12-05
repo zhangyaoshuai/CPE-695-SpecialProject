@@ -4,6 +4,14 @@
 $(document).ready(function () {
     var response;
     var dataset = [];
+    //define a layer for map
+    var mytiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    });
+    // Initialise an empty map
+    var map = L.map('map');
+    map.addLayer(mytiles);
+    var markers = new L.LayerGroup().addTo(map);
     $.ajax({
         data: {'screen_name': $('#screen_name').text()},
         url: '/getUser/',
@@ -17,15 +25,6 @@ $(document).ready(function () {
                 return b.number - a.number
             });
             generateChart(dataset.slice(0,10));
-
-            //define a layer for map
-            var mytiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            });
-            // Initialise an empty map
-            var map = L.map('map');
-            map.addLayer(mytiles);
-            var markers = new L.LayerGroup().addTo(map);
             showMap(response, markers, map)
         }
     });
@@ -107,7 +106,11 @@ $(document).ready(function () {
             .attr("y", function(d) { return y(d.number); })
             .attr("height", function(d) { return height - y(d.number); })
             .on('mouseover', tip.show)
-            .on('mouseout', tip.hide);
+            .on('mouseout', tip.hide)
+            .on('click', function(d) {
+                markers.clearLayers();
+                updateMap(response, markers, map, d.building)
+            });
 
         var sortTimeout = setTimeout(function() {
 
@@ -139,6 +142,15 @@ $(document).ready(function () {
                 .delay(delay);
         }
     };
+});
+
+
+// specify popup options
+    var customOptions = {
+        'maxWidth': '250',
+        'className' : 'custom-popup'
+    };
+
 
     //generate map
     var showMap = function(geoData, markers, map) {
@@ -152,19 +164,14 @@ $(document).ready(function () {
         var latMiddle = (Math.max.apply(null, lat) + Math.min.apply(null, lat)) / 2;
         var lngMiddle = (Math.max.apply(null, lng) + Math.min.apply(null, lng)) / 2;
         map.setView([lngMiddle,latMiddle], 12);
-        // specify popup options
-        var customOptions = {
-        'maxWidth': '250',
-        'className' : 'custom-popup'
-        };
+
         for (var i = 0; i < geoData.features.length; i++) {
-            if (geoData.features[i].buildings != "") {
                 L.marker([geoData.features[i].coordinates[1], geoData.features[i].coordinates[0]])
                     .bindPopup("<div class='panel panel-default'><div class='panel-heading'><h4 class='text-warning'>" +
                         geoData.features[i].buildings[0].name + "</h4>" + "<h4 class='text-primary'>" + geoData.features[i].buildings[0].type + "</h4></div><div class='panel-body'><div class='caption'><h4>" +
                         geoData.features[i].text + "</h4></div><h4><span class=text-danger>" +
                         geoData.features[i].created_at + "</span></h4></div>", customOptions)
-                    .addTo(map)
+                    .addTo(markers)
                     .on('mouseover', function (e) {
                         this.openPopup();
                     })
@@ -175,8 +182,49 @@ $(document).ready(function () {
                         this.off('mouseout');
                         this.openPopup();
                     })
+        }
+    };
+
+var updateMap = function (geoData, markers, map, kword) {
+        markers.clearLayers();
+        var data = [];
+        for(var i=0; i<geoData.features.length; i++) {
+            for(var j =0; j<geoData.features[i].buildings.length; j++) {
+                if(geoData.features[i].buildings[j].type == kword) {
+                    geoData.features[i].buildings[0].type= kword
+                    data.push(geoData.features[i]);
+                    break
+                }
             }
         }
-    }
+        console.log(data);
+        var lat = [];
+        var lng = [];
+        for (var i = 0; i < data.length; i++) {
+            lat.push(data[i].coordinates[0]);
+            lng.push(data[i].coordinates[1]);
+        }
+        var latMiddle = (Math.max.apply(null, lat) + Math.min.apply(null, lat)) / 2;
+        var lngMiddle = (Math.max.apply(null, lng) + Math.min.apply(null, lng)) / 2;
+        map.setView([lngMiddle,latMiddle], 12);
+        for (var i = 0; i < data.length; i++) {
+            L.marker([data[i].coordinates[1], data[i].coordinates[0]])
+                .bindPopup("<div class='panel panel-default'><div class='panel-heading'><h4 class='text-warning'>" +
+                    data[i].buildings[0].name + "</h4>" + "<h4 class='text-primary'>" +
+                    data[i].buildings[0].type + "</h4></div><div class='panel-body'><div class='caption'><h4>" +
+                    data[i].text + "</h4></div><h4><span class=text-danger>" +
+                    data[i].created_at + "</span></h4></div>", customOptions)
+                .addTo(markers)
+                .on('mouseover', function (e) {
+                    this.openPopup();
+                })
+                .on('mouseout', function (e) {
+                    this.closePopup();
+                })
+                .on('click', function (e) {
+                    this.off('mouseout');
+                    this.openPopup();
+                })
+            }
 
-});
+};
