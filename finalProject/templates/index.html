@@ -19,6 +19,9 @@
           fill: steelblue;
           fill-opacity: .9;
         }
+        .bar:hover {
+            fill: orangered ;
+        }
 
         .x.axis path {
           display: none;
@@ -28,6 +31,34 @@
           position: absolute;
           top: 10px;
           right: 10px;
+        }
+        .d3-tip {
+            line-height: 1;
+            font-weight: bold;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            border-radius: 2px;
+        }
+
+        /* Creates a small triangle extender for the tooltip */
+        .d3-tip:after {
+            box-sizing: border-box;
+            display: inline;
+            font-size: 10px;
+            width: 100%;
+            line-height: 1;
+            color: rgba(0, 0, 0, 0.8);
+            content: "\25BC";
+            position: absolute;
+            text-align: center;
+        }
+
+        /* Style northward tooltips differently */
+        .d3-tip.n:after {
+            margin: -1px 0 0 0;
+            top: 100%;
+            left: 0;
         }
 </style>
     <body>
@@ -120,8 +151,8 @@
         <div class="row" style="height: 100%;">
             <div id="svg1" class="col-sm-12 col-md-12">
                 <label><input id="sort" type="checkbox"> Sort values</label>
-                <button type="button" id="leastCommon" class="btn btn-primary">Least10</button>
-                <button type="button" id="mostCommon" class="btn btn-primary">Most10</button>
+                <button type="button" id="leastCommon" name="leastCommon" class="btn btn-primary">Least10</button>
+                <button type="button" id="mostCommon" name="mostCommon" class="btn btn-primary">Most10</button>
             </div>
             <div class="col-sm-12 col-md-12">
                 <svg id="svg2">
@@ -134,4 +165,5 @@
     </div>
     </body>
     <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+
 {% endblock %}

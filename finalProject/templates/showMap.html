@@ -3,6 +3,64 @@
 {% block title %}showMap{% endblock %}
 
 {% block content %}
+    <style>
+        .axis text {
+            font: 10px sans-serif;
+        }
+
+        .axis path,
+        .axis line {
+          fill: none;
+          stroke: #000;
+          shape-rendering: crispEdges;
+        }
+
+        .bar {
+          fill: steelblue;
+          fill-opacity: .9;
+        }
+        .bar:hover {
+            fill: orangered ;
+        }
+
+        .x.axis path {
+          display: none;
+        }
+
+        label {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+        }
+        .d3-tip {
+            line-height: 1;
+            font-weight: bold;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            border-radius: 2px;
+        }
+
+        /* Creates a small triangle extender for the tooltip */
+        .d3-tip:after {
+            box-sizing: border-box;
+            display: inline;
+            font-size: 10px;
+            width: 100%;
+            line-height: 1;
+            color: rgba(0, 0, 0, 0.8);
+            content: "\25BC";
+            position: absolute;
+            text-align: center;
+        }
+
+        /* Style northward tooltips differently */
+        .d3-tip.n:after {
+            margin: -1px 0 0 0;
+            top: 100%;
+            left: 0;
+        }
+</style>
     <body>
     <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -41,13 +99,12 @@
      <div class="container-fluid" style="height: 100%">
         <div class="row" style="height: 100%">
             <div class="col-sm-6 col-md-6" id="chart_container">
-                <div class="row">
+                <div class="row" style="margin-left: 10px; margin-right: 10px">
                     <div class="alert alert-info" id="screen_name"><h3 style="text-align: center">{{ geoData.screen_name }}</h3></div>
-                </div>
-                <div id="svg1" class="col-sm-12 col-md-12">
-                    <label><input id="sort" type="checkbox"> Sort values</label>
-                    <button type="button" id="leastCommon" class="btn btn-primary">Least10</button>
-                    <button type="button" id="mostCommon" class="btn btn-primary">Most10</button>
+                    <div id="svg1">
+                        <button type="button" id="leastCommon" class="btn btn-primary">Least10</button>
+                        <button type="button" id="mostCommon" class="btn btn-primary">Most10</button>
+                    </div>
                 </div>
             </div>
             <div class="col-sm-6 col-md-6" id="map_container">
@@ -60,39 +117,5 @@
 </div>
     </body>
     <script src="{{ url_for('static', filename='js/showMap.js') }}"></script>
-    <script type="text/javascript">
-        (function () {
-            var geoData = {{ geoData|safe }};//json data from Flask
-            console.log(geoData);
-            var mytiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            });
-            // Initialise an empty map
-            var map = L.map('map')
 
-            map.addLayer(mytiles).setView([37.697948,-97.314835], 4);
-            for (var i = 0; i < geoData.features.length; i++) {
-                if(geoData.features[i].geometry.coordinates != "") {
-                    L.marker([geoData.features[i].geometry.coordinates[1], geoData.features[i].geometry.coordinates[0]])
-                            .bindPopup("<div class='panel panel-default'><div class='panel-heading'>"+ geoData.screen_name +"</div><div class='panel-body'><div class='caption'><h4>" + geoData.features[i].properties.text + "</h4></div><span class=text-success>" + geoData.features[i].properties.created_at +"</span></div>")
-                            .addTo(map)
-                            .on('mouseover', function (e) {
-                                this.openPopup();
-                            })
-                            .on('mouseout', function (e) {
-                                this.closePopup();
-                            })
-                            .on('click', function (e) {
-                                this.off('mouseout');
-                                this.openPopup();
-                            })
-                }
-            }
-            $('input:text').focus(
-                    function () {
-                        $(this).val('');
-                    }
-            );
-        })(jQuery);
-     </script>
 {% endblock %}

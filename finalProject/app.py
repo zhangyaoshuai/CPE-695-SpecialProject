@@ -67,6 +67,7 @@ def getUser():
 #show collection of all building types.
 @app.route('/getBuildings', methods=["GET"])
 def getBuildings():
+    kword = request.args.get("kword")
     try:
         client = MongoClient(MONGODB_HOST, MONGODB_PORT)
         db = client[DB_NAME]
@@ -82,32 +83,11 @@ def getBuildings():
                 result[elem["type"]] = 1
             else:
                 result[elem["type"]] += 1
-    resultList = sorted(result, key=lambda key: result[key], reverse=True)
-    final = {}
-    for r in resultList[0:10]:
-        final[r] = result[r]
-    final = JSONEncoder().encode(final)
-    client.close()
-    return Response(final, status=200, mimetype='application/json')
-
-@app.route('/leastCommon', methods=["POST"])
-def leastCommon():
-    try:
-        client = MongoClient(MONGODB_HOST, MONGODB_PORT)
-        db = client[DB_NAME]
-        collection = db['buildings']
-    except Exception as e:
-        return Response({"error":"errorrrr"}, status=404, mimetype='application/json')
-    buildings = collection.find()
-    buildings = list(buildings)
-    result = {}
-    for building in buildings:
-        for elem in building["buildings"]:
-            if elem["type"] not in result:
-                result[elem["type"]] = 1
-            else:
-                result[elem["type"]] += 1
-    resultList = sorted(result, key=lambda key: result[key], reverse=False)
+    resultList = []
+    if kword == "mostCommon":
+        resultList = sorted(result, key=lambda key: result[key], reverse=True)
+    elif kword == "leastCommon":
+        resultList = sorted(result, key=lambda key: result[key], reverse=False)
     final = {}
     for r in resultList[0:10]:
         final[r] = result[r]
@@ -129,8 +109,8 @@ def showMap(uid):
     client.close()
     return render_template('showMap.html', geoData=geoData, uid=uid)
 
-@app.route('/getMap/', methods=["GET"])
-def getMap():
+@app.route('/getUser/', methods=["GET"])
+def getUser():
     screen_name = request.args.get("screen_name")
     try:
         client = MongoClient(MONGODB_HOST, MONGODB_PORT)
@@ -140,7 +120,9 @@ def getMap():
         return render_template('error.html',error = str(e))
     geoData = collection.find_one({'screen_name': screen_name})
     geoData['_id'] = str(geoData['_id'])
+    geoData = dict(geoData)
     client.close()
+    return Response(json.dumps(geoData), status=200, mimetype='application/json')
 
 
 

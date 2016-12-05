@@ -5,6 +5,7 @@ $(document).ready(function () {
     var response;
     $.ajax({
         url: '/getBuildings',
+        data: {'kword': $('#mostCommon').attr('name')},
         type: 'get',
         success: function(data) {
             response = data;
@@ -17,37 +18,38 @@ $(document).ready(function () {
         }
     });
     $('#leastCommon').on('click', function () {
+        $('#sort').prop('checked', false);
         d3.select("svg").remove();
         $.ajax({
-        url: '/leastCommon',
-        type: 'POST',
-        success: function(data) {
-            response = data;
-            var dataset = [];
-            for(var key in response) {
-                dataset.push({building: key, number: response[key]});
+            url: '/getBuildings',
+            data: {'kword': $('#leastCommon').attr('name')},
+            type: 'get',
+            success: function(data) {
+                response = data;
+                var dataset = [];
+                for(var key in response) {
+                    dataset.push({building: key, number: response[key]});
+                }
+                generateChart(dataset)
             }
-            generateChart(dataset)
-
-
-        }
-    });
+        });
     });
     $('#mostCommon').on('click', function () {
+        $('#sort').prop('checked', false);
         d3.select("svg").remove();
         $.ajax({
-        url: '/getBuildings',
-        type: 'GET',
-        success: function(data) {
-            response = data;
-            var dataset = [];
-            for(var key in response) {
-                dataset.push({building: key, number: response[key]});
+            url: '/getBuildings',
+            data: {'kword': $('#mostCommon').attr('name')},
+            type: 'get',
+            success: function(data) {
+                response = data;
+                var dataset = [];
+                for(var key in response) {
+                    dataset.push({building: key, number: response[key]});
+                }
+                generateChart(dataset)
             }
-            generateChart(dataset)
-
-        }
-    });
+        });
     });
 
     var generateChart = function (dataset) {
@@ -66,11 +68,19 @@ $(document).ready(function () {
         var yAxis = d3.svg.axis()
             .scale(y)
             .orient("left");
+        var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([-10, 0])
+            .html(function(d) {
+                return "<strong><span style='color:white'>" + d.building + "</span></strong>";
+            });
         var svg = d3.select("#svg1").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+            .on('mouseover', tip);
+        svg.call(tip);
         /*
         dataset.forEach(function(d) {
             d.number = +d.number;
@@ -101,11 +111,16 @@ $(document).ready(function () {
             .attr("x", function(d) { return x(d.building); })
             .attr("width", x.rangeBand())
             .attr("y", function(d) { return y(d.number); })
-            .attr("height", function(d) { return height - y(d.number); });
+            .attr("height", function(d) { return height - y(d.number); })
+            .on('mouseover', tip.show)
+            .on('mouseout', tip.hide);
+
         var sortTimeout = setTimeout(function() {
 
         }, 2000);
+
         $('#sort').on("change", change);
+
         function change() {
             clearTimeout(sortTimeout);
             // Copy-on-write since tweens are evaluated after a delay.
