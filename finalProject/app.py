@@ -12,11 +12,6 @@ class JSONEncoder(json.JSONEncoder):
             return str(o)
         return json.JSONEncoder.default(self, o)
 
-#get the most frequent terms in an array
-def Most_Common(lst):
-    data = Counter(lst)
-    return data.most_common(1)[0][0]
-
 #get all users that matches posted screen name
 '''
 def get_twitter_user(screen_name):
@@ -83,14 +78,19 @@ def getBuildings():
                 result[elem["type"]] = 1
             else:
                 result[elem["type"]] += 1
-    resultList = []
-    if kword == "mostCommon":
-        resultList = sorted(result, key=lambda key: result[key], reverse=True)
-    elif kword == "leastCommon":
-        resultList = sorted(result, key=lambda key: result[key], reverse=False)
+
     final = {}
-    for r in resultList[0:10]:
-        final[r] = result[r]
+    if kword == "all":
+        final = result
+        print(final)
+    else:
+        resultList = []
+        if kword == "mostCommon":
+            resultList = sorted(result, key=lambda key: result[key], reverse=True)
+        elif kword == "leastCommon":
+            resultList = sorted(result, key=lambda key: result[key], reverse=False)
+        for r in resultList[0:10]:
+            final[r] = result[r]
     final = JSONEncoder().encode(final)
     client.close()
     return Response(final, status=200, mimetype='application/json')

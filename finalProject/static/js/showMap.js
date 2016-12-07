@@ -24,8 +24,8 @@ $(document).ready(function () {
             dataset.sort(function (a,b) {
                 return b.number - a.number
             });
-            generateChart(dataset.slice(0,10));
-            showMap(response, markers, map)
+            generateChart(dataset);
+            showMap(response.features, markers, map)
         }
     });
 
@@ -35,15 +35,44 @@ $(document).ready(function () {
             return a.number - b.number
         });
         generateChart(dataset.slice(0,10));
-
-
+        var buildings = [];
+        for(var i=0; i<dataset.slice(0, 10).length; i++) {
+            buildings.push(dataset[i].building)
+        }
+        console.log(buildings);
+        var data = [];
+        for(var i=0; i<response.features.length; i++) {
+            if(buildings.indexOf(response.features[i].most_common_building.type) >= 0) {
+                data.push(response.features[i]);
+            }
+        }
+        showMap(data, markers, map)
     });
+
     $('#mostCommon').on('click', function () {
         d3.select("svg").remove();
         dataset.sort(function (a,b) {
             return b.number - a.number
         });
         generateChart(dataset.slice(0,10));
+        var buildings = [];
+        for(var i=0; i<dataset.slice(0, 10).length; i++) {
+            buildings.push(dataset[i].building)
+        }
+        console.log(buildings);
+        var data = [];
+        for(var i=0; i<response.features.length; i++) {
+            if(buildings.indexOf(response.features[i].most_common_building.type) >= 0) {
+                data.push(response.features[i]);
+            }
+        }
+        showMap(data, markers, map)
+    });
+
+    $('#searchForm').on('submit', function (e) {
+        e.preventDefault();
+        var kword = $('#formInput').val();
+        updateMap(response.features, markers, map, kword)
     });
 
     var generateChart = function (dataset) {
@@ -57,8 +86,15 @@ $(document).ready(function () {
             .range([height, 0]);
 
         var xAxis = d3.svg.axis()
-            .scale(x)
-            .orient("bottom");
+        if(dataset.length > 10) {
+            xAxis.scale(x)
+            .orient("bottom")
+            .tickFormat(function (d) { return ''; });
+        }
+        else {
+            xAxis.scale(x)
+            .orient("bottom")
+        }
         var yAxis = d3.svg.axis()
             .scale(y)
             .orient("left");
@@ -109,7 +145,7 @@ $(document).ready(function () {
             .on('mouseout', tip.hide)
             .on('click', function(d) {
                 markers.clearLayers();
-                updateMap(response, markers, map, d.building)
+                updateMap(response.features, markers, map, d.building)
             });
 
         var sortTimeout = setTimeout(function() {
@@ -146,31 +182,34 @@ $(document).ready(function () {
 
 
 // specify popup options
-    var customOptions = {
-        'maxWidth': '250',
-        'className' : 'custom-popup'
-    };
+var customOptions = {
+    "maxHeight": '200',
+    'maxWidth': '250',
+    'className' : 'custom-popup'
+};
 
 
-    //generate map
-    var showMap = function(geoData, markers, map) {
+//generate map
+var showMap = function(response, markers, map) {
+        geoData = response;
         markers.clearLayers();
         var lat = [];
         var lng = [];
-        for (var i = 0; i < geoData.features.length; i++) {
-            lat.push(geoData.features[i].coordinates[0]);
-            lng.push(geoData.features[i].coordinates[1]);
+        for (var i = 0; i < geoData.length; i++) {
+            lat.push(geoData[i].coordinates[0]);
+            lng.push(geoData[i].coordinates[1]);
         }
         var latMiddle = (Math.max.apply(null, lat) + Math.min.apply(null, lat)) / 2;
         var lngMiddle = (Math.max.apply(null, lng) + Math.min.apply(null, lng)) / 2;
-        map.setView([lngMiddle,latMiddle], 12);
+        map.setView([lngMiddle,latMiddle], 11);
 
-        for (var i = 0; i < geoData.features.length; i++) {
-                L.marker([geoData.features[i].coordinates[1], geoData.features[i].coordinates[0]])
+        for (i = 0; i < geoData.length; i++) {
+                L.marker([geoData[i].coordinates[1], geoData[i].coordinates[0]])
                     .bindPopup("<div class='panel panel-default'><div class='panel-heading'><h4 class='text-warning'>" +
-                        geoData.features[i].buildings[0].name + "</h4>" + "<h4 class='text-primary'>" + geoData.features[i].buildings[0].type + "</h4></div><div class='panel-body'><div class='caption'><h4>" +
-                        geoData.features[i].text + "</h4></div><h4><span class=text-danger>" +
-                        geoData.features[i].created_at + "</span></h4></div>", customOptions)
+                        geoData[i].most_common_building.name[0] + "</h4>" + "<h4 class='text-primary'>" +
+                        geoData[i].most_common_building.type + "</h4></div><div class='panel-body'><div class='caption'><h4>" +
+                        geoData[i].text + "</h4></div><h4><span class=text-danger>" +
+                        geoData[i].created_at + "</span></h4></div>", customOptions)
                     .addTo(markers)
                     .on('mouseover', function (e) {
                         this.openPopup();
@@ -185,33 +224,40 @@ $(document).ready(function () {
         }
     };
 
-var updateMap = function (geoData, markers, map, kword) {
+//update map
+var updateMap = function (response, markers, map, kword) {
+        geoData = response;
         markers.clearLayers();
         var data = [];
-        for(var i=0; i<geoData.features.length; i++) {
-            for(var j =0; j<geoData.features[i].buildings.length; j++) {
-                if(geoData.features[i].buildings[j].type == kword) {
-                    geoData.features[i].buildings[0].type= kword
-                    data.push(geoData.features[i]);
-                    break
+        for(var i=0; i<geoData.length; i++) {
+            if(geoData[i].most_common_building.type == kword) {
+                data.push(geoData[i]);
+            }
+            else {
+                for(var j=0; j<geoData[i].buildings.length; j++) {
+                    if(geoData[i].buildings[j].type==kword) {
+                        geoData[i].most_common_building.type = kword;
+                        geoData[i].most_common_building.name[0] = geoData[i].buildings[j].name;
+                        data.push(geoData[i]);
+                        break
+                    }
                 }
             }
         }
-        console.log(data);
         var lat = [];
         var lng = [];
-        for (var i = 0; i < data.length; i++) {
+        for (i = 0; i < data.length; i++) {
             lat.push(data[i].coordinates[0]);
             lng.push(data[i].coordinates[1]);
         }
         var latMiddle = (Math.max.apply(null, lat) + Math.min.apply(null, lat)) / 2;
         var lngMiddle = (Math.max.apply(null, lng) + Math.min.apply(null, lng)) / 2;
         map.setView([lngMiddle,latMiddle], 12);
-        for (var i = 0; i < data.length; i++) {
+        for (i = 0; i < data.length; i++) {
             L.marker([data[i].coordinates[1], data[i].coordinates[0]])
                 .bindPopup("<div class='panel panel-default'><div class='panel-heading'><h4 class='text-warning'>" +
-                    data[i].buildings[0].name + "</h4>" + "<h4 class='text-primary'>" +
-                    data[i].buildings[0].type + "</h4></div><div class='panel-body'><div class='caption'><h4>" +
+                    data[i].most_common_building.name[0] + "</h4>" + "<h4 class='text-primary'>" +
+                    data[i].most_common_building.type + "</h4></div><div class='panel-body'><div class='caption'><h4>" +
                     data[i].text + "</h4></div><h4><span class=text-danger>" +
                     data[i].created_at + "</span></h4></div>", customOptions)
                 .addTo(markers)

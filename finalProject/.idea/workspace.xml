@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="38afa935-cb61-43f6-be92-779bc6c61119" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../.idea/workspace.xml" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../dataProcessing/store_twits.py" afterPath="$PROJECT_DIR$/../dataProcessing/store_twits.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../dataProcessing/user_buildings.py" afterPath="$PROJECT_DIR$/../dataProcessing/user_buildings.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.py" afterPath="$PROJECT_DIR$/app.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/css/main.css" afterPath="$PROJECT_DIR$/static/css/main.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/index.js" afterPath="$PROJECT_DIR$/static/js/index.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/showMap.js" afterPath="$PROJECT_DIR$/static/js/showMap.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base.html" afterPath="$PROJECT_DIR$/templates/base.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/index.html" afterPath="$PROJECT_DIR$/templates/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/showMap.html" afterPath="$PROJECT_DIR$/templates/showMap.html" />
     </list>
     <ignored path="finalProject.iws" />
@@ -18,7 +24,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/finalProject$app.coverage" NAME="app Coverage Results" MODIFIED="1480926767162" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/finalProject$app.coverage" NAME="app Coverage Results" MODIFIED="1481145677430" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/finalProject$finalProject.coverage" NAME="app Coverage Results" MODIFIED="1477785789070" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
@@ -51,8 +57,8 @@
       <file leaf-file-name="app.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1653">
-              <caret line="87" column="40" lean-forward="false" selection-start-line="87" selection-start-column="40" selection-end-line="87" selection-end-column="40" />
+            <state relative-caret-position="1672">
+              <caret line="93" column="39" lean-forward="false" selection-start-line="93" selection-start-column="39" selection-end-line="93" selection-end-column="39" />
               <folding>
                 <element signature="e#0#86#0" expanded="true" />
               </folding>
@@ -63,8 +69,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="798">
-              <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+            <state relative-caret-position="2071">
+              <caret line="109" column="20" lean-forward="false" selection-start-line="109" selection-start-column="20" selection-end-line="109" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -73,12 +79,12 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/js/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2147">
-              <caret line="115" column="38" lean-forward="false" selection-start-line="115" selection-start-column="38" selection-end-line="115" selection-end-column="38" />
+            <state relative-caret-position="1349">
+              <caret line="73" column="9" lean-forward="false" selection-start-line="64" selection-start-column="8" selection-end-line="73" selection-end-column="9" />
               <folding>
                 <element signature="e#0#43#0" expanded="false" />
-                <marker date="1480917910000" expanded="true" signature="2385:2391" ph="..." />
-                <marker date="1480917910000" expanded="true" signature="2385:2396" ph="..." />
+                <marker date="1481063454000" expanded="true" signature="2545:2551" ph="..." />
+                <marker date="1481063454000" expanded="true" signature="2545:2556" ph="..." />
               </folding>
             </state>
           </provider>
@@ -87,12 +93,17 @@
       <file leaf-file-name="showMap.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/static/js/showMap.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2812">
-              <caret line="150" column="36" lean-forward="true" selection-start-line="150" selection-start-column="36" selection-end-line="150" selection-end-column="36" />
+            <state relative-caret-position="345">
+              <caret line="214" column="41" lean-forward="true" selection-start-line="214" selection-start-column="41" selection-end-line="214" selection-end-column="41" />
               <folding>
                 <element signature="e#0#43#0" expanded="false" />
-                <marker date="1480927279000" expanded="true" signature="242:248" ph="©" />
-                <marker date="1480927279000" expanded="true" signature="2183:2194" ph="..." />
+                <element signature="e#470#1009#0" expanded="false" />
+                <element signature="e#1059#1688#0" expanded="false" />
+                <element signature="e#1737#2366#0" expanded="false" />
+                <element signature="e#2600#6196#0" expanded="false" />
+                <element signature="e#8052#10172#0" expanded="false" />
+                <marker date="1481064271000" expanded="true" signature="242:248" ph="©" />
+                <marker date="1481064271000" expanded="true" signature="3458:3469" ph="..." />
               </folding>
             </state>
           </provider>
@@ -101,8 +112,8 @@
       <file leaf-file-name="showMap.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/showMap.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1653">
-              <caret line="87" column="77" lean-forward="false" selection-start-line="87" selection-start-column="77" selection-end-line="87" selection-end-column="77" />
+            <state relative-caret-position="342">
+              <caret line="18" column="24" lean-forward="false" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -111,8 +122,8 @@
       <file leaf-file-name="main.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/css/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1463">
-              <caret line="77" column="1" lean-forward="false" selection-start-line="77" selection-start-column="1" selection-end-line="77" selection-end-column="1" />
+            <state relative-caret-position="418">
+              <caret line="22" column="18" lean-forward="false" selection-start-line="22" selection-start-column="18" selection-end-line="22" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -152,12 +163,12 @@
         <option value="$PROJECT_DIR$/GoogleAPI.py" />
         <option value="$PROJECT_DIR$/static/js/main.js" />
         <option value="$USER_HOME$/Documents/EE695/specialProject/json_to_csv.py" />
-        <option value="$PROJECT_DIR$/app.py" />
-        <option value="$PROJECT_DIR$/templates/index.html" />
-        <option value="$PROJECT_DIR$/static/js/index.js" />
-        <option value="$PROJECT_DIR$/static/css/main.css" />
         <option value="$PROJECT_DIR$/templates/base.html" />
+        <option value="$PROJECT_DIR$/static/css/main.css" />
         <option value="$PROJECT_DIR$/templates/showMap.html" />
+        <option value="$PROJECT_DIR$/templates/index.html" />
+        <option value="$PROJECT_DIR$/app.py" />
+        <option value="$PROJECT_DIR$/static/js/index.js" />
         <option value="$PROJECT_DIR$/static/js/showMap.js" />
       </list>
     </option>
@@ -171,7 +182,7 @@
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1280" />
-    <option name="height" value="724" />
+    <option name="height" value="712" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -207,6 +218,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -253,7 +265,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -541,16 +552,16 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="724" extended-state="6" />
+    <frame x="0" y="23" width="1280" height="712" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1742671" sideWeight="0.49527186" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13680781" sideWeight="0.49527186" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980457" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2394822" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.09570957" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15270413" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17512275" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.11666667" sideWeight="0.50472814" order="2" side_tool="true" content_ui="tabs" />
@@ -600,7 +611,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="2" />
+      <option name="time" value="5" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -916,44 +927,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="798">
-          <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/css/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1463">
-          <caret line="77" column="1" lean-forward="false" selection-start-line="77" selection-start-column="1" selection-end-line="77" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="19">
           <caret line="1" column="18" lean-forward="true" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/showMap.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1653">
-          <caret line="87" column="77" lean-forward="false" selection-start-line="87" selection-start-column="77" selection-end-line="87" selection-end-column="77" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1653">
-          <caret line="87" column="40" lean-forward="false" selection-start-line="87" selection-start-column="40" selection-end-line="87" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#86#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -965,26 +942,65 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/static/css/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="22" column="18" lean-forward="false" selection-start-line="22" selection-start-column="18" selection-end-line="22" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/showMap.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="18" column="24" lean-forward="false" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2071">
+          <caret line="109" column="20" lean-forward="false" selection-start-line="109" selection-start-column="20" selection-end-line="109" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/static/js/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2147">
-          <caret line="115" column="38" lean-forward="false" selection-start-line="115" selection-start-column="38" selection-end-line="115" selection-end-column="38" />
+        <state relative-caret-position="1349">
+          <caret line="73" column="9" lean-forward="false" selection-start-line="64" selection-start-column="8" selection-end-line="73" selection-end-column="9" />
           <folding>
             <element signature="e#0#43#0" expanded="false" />
-            <marker date="1480917910000" expanded="true" signature="2385:2391" ph="..." />
-            <marker date="1480917910000" expanded="true" signature="2385:2396" ph="..." />
+            <marker date="1481063454000" expanded="true" signature="2545:2551" ph="..." />
+            <marker date="1481063454000" expanded="true" signature="2545:2556" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1672">
+          <caret line="93" column="39" lean-forward="false" selection-start-line="93" selection-start-column="39" selection-end-line="93" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#86#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/static/js/showMap.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2812">
-          <caret line="150" column="36" lean-forward="true" selection-start-line="150" selection-start-column="36" selection-end-line="150" selection-end-column="36" />
+        <state relative-caret-position="345">
+          <caret line="214" column="41" lean-forward="true" selection-start-line="214" selection-start-column="41" selection-end-line="214" selection-end-column="41" />
           <folding>
             <element signature="e#0#43#0" expanded="false" />
-            <marker date="1480927279000" expanded="true" signature="242:248" ph="©" />
-            <marker date="1480927279000" expanded="true" signature="2183:2194" ph="..." />
+            <element signature="e#470#1009#0" expanded="false" />
+            <element signature="e#1059#1688#0" expanded="false" />
+            <element signature="e#1737#2366#0" expanded="false" />
+            <element signature="e#2600#6196#0" expanded="false" />
+            <element signature="e#8052#10172#0" expanded="false" />
+            <marker date="1481064271000" expanded="true" signature="242:248" ph="©" />
+            <marker date="1481064271000" expanded="true" signature="3458:3469" ph="..." />
           </folding>
         </state>
       </provider>

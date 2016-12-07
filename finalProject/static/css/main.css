@@ -7,6 +7,38 @@ body .image-container {
     background-size:100%;
     background: white;
 }
+navbar-custom .icon-bar {
+	background-color:#fff;
+}
+
+.navbar-custom {
+	background-color: #428BCA;
+    color:#fff;
+}
+
+.navbar-custom li>a:hover,.navbar-custom li>a:focus {
+	background-color: #5BC0DE;
+}
+.navbar-brand:hover {
+    color:#fefefe;
+    background-color: #5BC0DE;
+}
+.navbar-custom .dropdown > a{
+    color:#fefefe;
+}
+.navbar-nav > li > a {
+    color: #fefefe;
+}
+
+.navbar-brand {
+    color:#fefefe;
+}
+.navbar-custom .form-control:focus {
+	border-color: #5BC0DE;
+	outline: 0;
+	-webkit-box-shadow: inset 0 0 0;
+	box-shadow: inset 0 0 0;
+}
 
 .thumbnail > image {
     max-height: 150px;
@@ -25,19 +57,6 @@ ul.errorlist > li {
 
 .navbar {
     border-radius: 0;
-}
-/*
-.navbar-brand {
-    font-family: 'Satisfy', cursive;
-}
-*/
-.glyphicon-star {
-    color: #CCCCCC;
-    font-size: 16px;
-}
-
-.glyphicon-star.active {
-    color: #FDB230;
 }
 
 #user-container {

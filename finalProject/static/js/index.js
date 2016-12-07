@@ -5,7 +5,7 @@ $(document).ready(function () {
     var response;
     $.ajax({
         url: '/getBuildings',
-        data: {'kword': $('#mostCommon').attr('name')},
+        data: {'kword': "all"},
         type: 'get',
         success: function(data) {
             response = data;
@@ -63,8 +63,15 @@ $(document).ready(function () {
             .range([height, 0]);
 
         var xAxis = d3.svg.axis()
-            .scale(x)
-            .orient("bottom");
+        if(dataset.length > 10) {
+            xAxis.scale(x)
+            .orient("bottom")
+            .tickFormat(function (d) { return ''; });
+        }
+        else {
+            xAxis.scale(x)
+            .orient("bottom")
+        }
         var yAxis = d3.svg.axis()
             .scale(y)
             .orient("left");
@@ -81,11 +88,6 @@ $(document).ready(function () {
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
             .on('mouseover', tip);
         svg.call(tip);
-        /*
-        dataset.forEach(function(d) {
-            d.number = +d.number;
-        });
-        */
 
         x.domain(dataset.map(function(d) { return d.building; }));
         y.domain([0, d3.max(dataset, function(d) { return d.number; })]);
