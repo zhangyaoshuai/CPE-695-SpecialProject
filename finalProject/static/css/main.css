@@ -62,7 +62,7 @@ ul.errorlist > li {
 #user-container {
     width:40%;
     height:100%;
-    max-height:600px;
+    max-height:650px;
     min-width: 100px;
     overflow-y:scroll;
     position:relative;

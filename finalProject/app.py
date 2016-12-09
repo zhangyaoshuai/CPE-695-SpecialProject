@@ -95,6 +95,22 @@ def getBuildings():
     client.close()
     return Response(final, status=200, mimetype='application/json')
 
+@app.route('/getData', methods=["GET"])
+def getData():
+    try:
+        client = MongoClient(MONGODB_HOST, MONGODB_PORT)
+        db = client[DB_NAME]
+        collection = db['user_timelines']
+    except Exception as e:
+        return Response({"error":"errorrrr"}, status=404, mimetype='application/json')
+    data = collection.find()
+    data = list(data)
+    result = []
+    for d in data:
+        result.append({'followers_count': d['followers_count'],
+                       'friends_count': d['friends_count']})
+    return Response(json.dumps(result), status=200, mimetype='application/json')
+
 #show the map...
 @app.route('/showMap/<uid>', methods=["GET"])
 def showMap(uid):

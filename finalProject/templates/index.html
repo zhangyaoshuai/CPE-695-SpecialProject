@@ -22,7 +22,9 @@
         .bar:hover {
             fill: orangered ;
         }
-
+        .dot {
+            stroke: #000;
+        }
         .x.axis path {
           display: none;
         }
@@ -151,13 +153,14 @@
         <div class="row" style="height: 100%;">
             <div id="svg1" class="col-sm-12 col-md-12">
                 <label><input id="sort" type="checkbox"> Sort values</label>
-                <button type="button" id="leastCommon" name="leastCommon" class="btn btn-primary">Least10</button>
-                <button type="button" id="mostCommon" name="mostCommon" class="btn btn-primary">Most10</button>
+                <button type="button" id="leastCommon" name="leastCommon" class="btn btn-success">Least10</button>
+                <button type="button" id="mostCommon" name="mostCommon" class="btn btn-success">Most10</button>
             </div>
             <div class="col-sm-12 col-md-12">
-                <svg id="svg2">
+                <div id="svg2">
+
                     <!-- TODO -->
-                </svg>
+                </div>
             </div>
 
         </div>
