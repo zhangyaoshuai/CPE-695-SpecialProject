@@ -28,7 +28,39 @@ $(document).ready(function () {
             showMap(response.features, markers, map)
         }
     });
-
+    $('#interval2').on('click', function () {
+        $.ajax({
+            data: {'screen_name': $('#screen_name').text(), 'interval': 2},
+            url: '/predict',
+            type: 'get',
+            success: function (data) {
+                console.log(data);
+                prediction(data, markers, map)
+            }
+        })
+    });
+    $('#interval3').on('click', function () {
+        $.ajax({
+            data: {'screen_name': $('#screen_name').text(), 'interval': 3},
+            url: '/predict',
+            type: 'get',
+            success: function (data) {
+                console.log(data);
+                prediction(data, markers, map)
+            }
+        })
+    });
+    $('#interval4').on('click', function () {
+        $.ajax({
+            data: {'screen_name': $('#screen_name').text(), 'interval': 4},
+            url: '/predict',
+            type: 'get',
+            success: function (data) {
+                console.log(data);
+                prediction(data, markers, map)
+            }
+        })
+    });
     $('#leastCommon').on('click', function () {
         d3.select("svg").remove();
         dataset.sort(function (a,b) {
@@ -201,7 +233,7 @@ var showMap = function(response, markers, map) {
         }
         var latMiddle = (Math.max.apply(null, lat) + Math.min.apply(null, lat)) / 2;
         var lngMiddle = (Math.max.apply(null, lng) + Math.min.apply(null, lng)) / 2;
-        map.setView([lngMiddle,latMiddle], 11);
+        map.setView([lngMiddle,latMiddle], 8);
 
         for (i = 0; i < geoData.length; i++) {
                 L.marker([geoData[i].coordinates[1], geoData[i].coordinates[0]])
@@ -274,3 +306,37 @@ var updateMap = function (response, markers, map, kword) {
             }
 
 };
+
+var prediction = function(response, markers, map) {
+        geoData = response;
+        markers.clearLayers();
+        var lat = [];
+        var lng = [];
+        for (var i = 0; i < geoData.length; i++) {
+            lat.push(geoData[i].coordinates[0]);
+            lng.push(geoData[i].coordinates[1]);
+        }
+        var latMiddle = (Math.max.apply(null, lat) + Math.min.apply(null, lat)) / 2;
+        var lngMiddle = (Math.max.apply(null, lng) + Math.min.apply(null, lng)) / 2;
+        map.setView([lngMiddle,latMiddle], 8);
+
+        for (i = 0; i < geoData.length; i++) {
+                L.marker([geoData[i].coordinates[1], geoData[i].coordinates[0]])
+                    .bindPopup("<div class='panel panel-default'><div class='panel-heading'><h4 class='text-warning'>" +
+                         + "</h4>" + "<h4 class='text-primary'>" +
+                         + "</h4></div><div class='panel-body'><div class='caption'><h4>" +
+                         + "</h4></div><h4><span class=text-danger>" +
+                         + "</span></h4></div>", customOptions)
+                    .addTo(markers)
+                    .on('mouseover', function (e) {
+                        this.openPopup();
+                    })
+                    .on('mouseout', function (e) {
+                        this.closePopup();
+                    })
+                    .on('click', function (e) {
+                        this.off('mouseout');
+                        this.openPopup();
+                    })
+        }
+    };

@@ -3,7 +3,6 @@ from flask import Flask, render_template, request, Response, json, send_from_dir
 from pymongo import MongoClient
 from bson import ObjectId
 import json
-from collections import Counter
 
 
 class JSONEncoder(json.JSONEncoder):
@@ -12,19 +11,8 @@ class JSONEncoder(json.JSONEncoder):
             return str(o)
         return json.JSONEncoder.default(self, o)
 
-#get all users that matches posted screen name
-'''
-def get_twitter_user(screen_name):
-    client = get_twitter_client()
-    twitter_user = client.get_user(screen_name=screen_name)
-    return twitter_user
-'''
 
-app = Flask(__name__, static_url_path='')
-
-@app.route('/public/<path:path>')
-def send_js(path):
-    return send_from_directory('static', path)
+app = Flask(__name__)
 
 #MongoDB coonection
 MONGODB_HOST = 'localhost'
@@ -45,19 +33,6 @@ def index():
     client.close()
     return render_template('index.html', users=users)
 
-
-#search a specific user by screen name
-'''
-@app.route('/getUser', methods=["POST"])
-def getUser():
-    screen_name = request.form.get("screen_name")
-    try:
-        twitter_user = get_twitter_user(screen_name)
-    except Exception as e:
-        return render_template('index.html', error=str(e))
-
-    return render_template('index.html', twitter_user=twitter_user)
-'''
 
 #show collection of all building types.
 @app.route('/getBuildings', methods=["GET"])
@@ -94,6 +69,35 @@ def getBuildings():
     final = JSONEncoder().encode(final)
     client.close()
     return Response(final, status=200, mimetype='application/json')
+
+@app.route('/predict', methods=["GET"])
+def predict():
+    screen_name = request.args.get("screen_name")
+    interval = request.args.get("interval")
+    try:
+        client = MongoClient(MONGODB_HOST, MONGODB_PORT)
+        db = client[DB_NAME]
+        collection1 = db['user_timelines']
+        collection2 = db['predictions']
+    except Exception as e:
+        return Response({"error":"errorrrr"}, status=404, mimetype='application/json')
+    user = collection1.find_one({'screen_name': screen_name})
+    user = dict(user)
+    user_id = user['user_id']
+    user = collection2.find_one({'user_id': user_id})
+    user = dict(user)
+    if interval == 2:
+        data = user['interval2']
+    elif interval == 3:
+        data = user['interval3']
+    else:
+        data = user['interval4']
+
+    print data
+    client.close()
+    return Response(json.dumps(data), status=200, mimetype='application/json')
+
+
 
 @app.route('/getData', methods=["GET"])
 def getData():
